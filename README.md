@@ -1,4 +1,4 @@
-#NeopixelSim
+# NeopixelSim
 
 Simulates, very approximately, an Adafruit RGBW Neopixel Ring (or Strip) 
 with 60 Neopixels using the Python Tkinter library.
