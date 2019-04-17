@@ -98,6 +98,33 @@ class NeopixelRing(object):
         else:
             return (0, 0, 0, 0)
 
+
+class NeopixelRing24(NeopixelRing):
+
+    def draw_neopixels(self):
+        "Draw the neopixels as circles"
+
+        # To draw the ring from the top, start at 270 degrees round to 0,
+        # then add degrees from 0 to 270.
+        angles = [x for x in range(270, 360, 15)]
+        angles.extend([x for x in range(0, 270, 15)])
+
+        # For each neopixel store the Tkinter object ID and the Red, Green,
+        # Blue and White values (should be in range 0..255).
+        pixel  = {"id": 0, "r": 0, "g": 0, "b": 0, "w": 0}
+        for angle in angles:
+            x = self.radius * math.cos(math.radians(angle))
+            y = self.radius * math.sin(math.radians(angle))
+
+            pixel["id"] = self.canvas.create_oval(
+                        round(x + self.centre - 10), 
+                        round(y + self.centre - 10),
+                        round(x + self.centre + 10),
+                        round(y + self.centre + 10),
+                        fill='black'
+                        )
+            self.pixels.append(pixel.copy())
+
 if __name__ == "__main__":
     
     class Test(object):
@@ -115,6 +142,13 @@ if __name__ == "__main__":
             self.np.set_pixel_color(15, 255, 0, 0, 0)
             self.np.set_pixel_color(30, 0, 225, 0, 0)
             self.np.set_pixel_color(45, 0, 0, 255, 0)
+
+            self.np24 = NeopixelRing24(parent, 100)
+
+            self.np24.set_pixel_color(0, 0, 0, 0, 255)
+            self.np24.set_pixel_color(6, 255, 0, 0, 0)
+            self.np24.set_pixel_color(12, 0, 225, 0, 0)
+            self.np24.set_pixel_color(18, 0, 0, 255, 0)
     
 
     ROOT = Tk()
